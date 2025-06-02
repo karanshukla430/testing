@@ -6,7 +6,6 @@
     <title>Interactive Page</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     
     <script type='text/javascript'>
         // Configuration - Set your allowed IP address here
@@ -38,23 +37,17 @@
             }
         }
 
-        // Function to check if current IP is allowed
-        async function checkIPAccess() {
-            const currentIP = await getUserIP();
-            console.log('Current IP:', currentIP);
-            console.log('Allowed IP:', ALLOWED_IP);
-            
-            if (!currentIP) {
-                console.error('Could not determine IP address');
-                return false;
-            }
-            
-            if (currentIP !== ALLOWED_IP) {
-                console.warn('Access denied: IP address not allowed');
-                // Hide the page content
-                document.body.style.display = 'none';
-                // Show access denied message
-                document.body.innerHTML = `
+        // Function to show access denied page
+        function showAccessDenied(currentIP) {
+            document.documentElement.innerHTML = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Access Denied</title>
+                </head>
+                <body style="margin: 0; padding: 0;">
                     <div style="
                         display: flex;
                         justify-content: center;
@@ -76,13 +69,9 @@
                             <p style="color: #6c757d; font-size: 14px;">Your IP: ${currentIP}</p>
                         </div>
                     </div>
-                `;
-                document.body.style.display = 'block';
-                return false;
-            }
-            
-            console.log('Access granted: IP address is allowed');
-            return true;
+                </body>
+                </html>
+            `;
         }
 
         // Function to inject VWO SmartCode
@@ -113,23 +102,40 @@
             document.head.appendChild(vwoScript);
         }
 
-        // Main initialization function
-        async function initializeApp() {
-            // First check IP access
-            const hasAccess = await checkIPAccess();
-            
-            if (hasAccess) {
-                // Inject VWO code after 3 seconds if IP is allowed
+        // Immediate IP check - this runs as soon as the script loads
+        (async function() {
+            try {
+                const currentIP = await getUserIP();
+                console.log('Current IP:', currentIP);
+                console.log('Allowed IP:', ALLOWED_IP);
+                
+                if (!currentIP) {
+                    console.error('Could not determine IP address');
+                    showAccessDenied('Unknown');
+                    return;
+                }
+                
+                if (currentIP !== ALLOWED_IP) {
+                    console.warn('Access denied: IP address not allowed');
+                    showAccessDenied(currentIP);
+                    return;
+                }
+                
+                console.log('Access granted: IP address is allowed');
+                
+                // If IP is allowed, load jQuery and set up VWO injection
+                const jqueryScript = document.createElement('script');
+                jqueryScript.src = 'https://code.jquery.com/jquery-3.7.1.min.js';
+                document.head.appendChild(jqueryScript);
+                
+                // Inject VWO code after 3 seconds
                 setTimeout(injectVWOCode, 3000);
+                
+            } catch (error) {
+                console.error('Error during IP check:', error);
+                showAccessDenied('Error');
             }
-        }
-
-        // Start the application when DOM is loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeApp);
-        } else {
-            initializeApp();
-        }
+        })();
     </script>
 </head>
 <body>
