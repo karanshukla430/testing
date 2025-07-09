@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Page</title>
+    <title>Interactive Page with Nested Routes</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Start VWO Async SmartCode -->
 <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
@@ -20,32 +20,225 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 <!-- End VWO Async SmartCode -->
 </head>
 <body>
-    <div class="container">
-        <h1 id="main-heading">Welcome to My Interactive Page</h1>
-        <div class="button-section">
-            <button id="change-heading">Change Heading</button>
-            <button id="change-color">Change Background</button>
+    <!-- Main Navigation Menu -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="#/" class="nav-link">Home</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#/a" class="nav-link">Route A</a></li>
+                <li><a href="#/b" class="nav-link">Route B</a></li>
+                <li><a href="#/c" class="nav-link">Route C</a></li>
+                <li><a href="#/about" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sub Navigation (appears when in nested routes) -->
+    <nav class="sub-navbar" id="sub-navbar" style="display: none;">
+        <div class="nav-container">
+            <div class="breadcrumb" id="breadcrumb">
+                <span class="breadcrumb-item">Home</span>
+            </div>
+            <ul class="sub-nav-menu" id="sub-nav-menu">
+                <!-- Sub-navigation items will be dynamically added here -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div id="app">
+        <!-- Home Page (/) -->
+        <div id="home-page" class="page active">
+            <div class="container">
+                <h1 id="main-heading">Welcome to My Interactive Page</h1>
+                <div class="button-section">
+                    <button id="change-heading">Change Heading</button>
+                    <button id="change-color">Change Background</button>
+                </div>
+
+                <div class="form-section">
+                    <h2>Contact Form</h2>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" id="submit-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div class="form-section">
-            <h2>Contact Form</h2>
-            <form id="contact-form">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
+        <!-- Route A (/a) -->
+        <div id="route-a" class="page">
+            <div class="container">
+                <h1>Route A - Main Section</h1>
+                <div class="route-content">
+                    <p>This is the main Route A page. Navigate to sub-routes using the sub-navigation above.</p>
+                    <div class="route-info">
+                        <h3>Available Sub-routes:</h3>
+                        <ul>
+                            <li><strong>/a/b</strong> - Sub-route B within A</li>
+                            <li><strong>/a/b/c</strong> - Sub-sub-route C within B</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+            </div>
+        </div>
+
+        <!-- Route A/B (/a/b) -->
+        <div id="route-a-b" class="page">
+            <div class="container">
+                <h1>Route A/B - Sub-section B</h1>
+                <div class="route-content">
+                    <p>This is sub-route B within Route A. You can go deeper to Route C.</p>
+                    <div class="sub-route-features">
+                        <h3>Features in A/B:</h3>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Feature 1</h4>
+                                <p>Interactive content for sub-route B</p>
+                                <button class="feature-btn" onclick="alert('Feature 1 activated!')">Activate</button>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Feature 2</h4>
+                                <p>Another interactive element</p>
+                                <button class="feature-btn" onclick="alert('Feature 2 activated!')">Activate</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" required></textarea>
+            </div>
+        </div>
+
+        <!-- Route A/B/C (/a/b/c) -->
+        <div id="route-a-b-c" class="page">
+            <div class="container">
+                <h1>Route A/B/C - Deepest Level</h1>
+                <div class="route-content">
+                    <p>This is the deepest nested route: A → B → C</p>
+                    <div class="deep-route-content">
+                        <h3>Deep Route Features:</h3>
+                        <div class="deep-features">
+                            <div class="deep-feature">
+                                <h4>Advanced Tool 1</h4>
+                                <div class="tool-interface">
+                                    <input type="range" id="slider1" min="0" max="100" value="50">
+                                    <span id="slider-value">50</span>
+                                </div>
+                            </div>
+                            <div class="deep-feature">
+                                <h4>Advanced Tool 2</h4>
+                                <div class="tool-interface">
+                                    <select id="dropdown1">
+                                        <option value="option1">Option 1</option>
+                                        <option value="option2">Option 2</option>
+                                        <option value="option3">Option 3</option>
+                                    </select>
+                                    <button onclick="alert('Selected: ' + document.getElementById('dropdown1').value)">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" id="submit-btn">Submit</button>
-            </form>
+            </div>
+        </div>
+
+        <!-- Route B (/b) -->
+        <div id="route-b" class="page">
+            <div class="container">
+                <h1>Route B - Data Dashboard</h1>
+                <div class="dashboard-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Users</h3>
+                            <div class="stat-number" id="user-count">1,234</div>
+                            <div class="stat-change positive">+12%</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Revenue</h3>
+                            <div class="stat-number" id="revenue">$45,678</div>
+                            <div class="stat-change positive">+8%</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Orders</h3>
+                            <div class="stat-number" id="order-count">567</div>
+                            <div class="stat-change negative">-3%</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Conversion</h3>
+                            <div class="stat-number" id="conversion-rate">2.4%</div>
+                            <div class="stat-change positive">+1.2%</div>
+                        </div>
+                    </div>
+                    <button id="refresh-stats" class="dashboard-btn">Refresh Stats</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Route C (/c) -->
+        <div id="route-c" class="page">
+            <div class="container">
+                <h1>Route C - Interactive Tools</h1>
+                <div class="tools-section">
+                    <div class="tool-card">
+                        <h3>Color Picker</h3>
+                        <input type="color" id="color-picker" value="#ff6b6b">
+                        <div class="color-preview" id="color-preview"></div>
+                        <p>Selected color: <span id="color-value">#ff6b6b</span></p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3>Text Generator</h3>
+                        <button id="generate-text" class="tool-btn">Generate Random Text</button>
+                        <div class="generated-text" id="generated-text">
+                            Click the button to generate random text!
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3>Timer</h3>
+                        <div class="timer-display" id="timer-display">00:00</div>
+                        <div class="timer-controls">
+                            <button id="start-timer" class="timer-btn">Start</button>
+                            <button id="stop-timer" class="timer-btn">Stop</button>
+                            <button id="reset-timer" class="timer-btn">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page (/about) -->
+        <div id="about-page" class="page">
+            <div class="container">
+                <h1>About This Project</h1>
+                <div class="about-content">
+                    <p>This is an interactive web application with nested routing:</p>
+                    <ul>
+                        <li><strong>Home (/):</strong> Interactive form and dynamic content</li>
+                        <li><strong>Route A (/a):</strong> Main route with sub-navigation</li>
+                        <li><strong>Route A/B (/a/b):</strong> Sub-route within A</li>
+                        <li><strong>Route A/B/C (/a/b/c):</strong> Deepest nested route</li>
+                        <li><strong>Route B (/b):</strong> Data dashboard with live statistics</li>
+                        <li><strong>Route C (/c):</strong> Interactive tools</li>
+                    </ul>
+                    <p>Navigate between routes using the navigation menus above!</p>
+                </div>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html> 
