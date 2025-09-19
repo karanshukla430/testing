@@ -516,5 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const router = new NestedRouter(routes);
     
     // Automatically start deleting karanshukla element after page loads
-    deleteKaranShuklaElement();
+    setTimeout(() => {
+        deleteKaranShuklaElement();
+    }, 2000);
 }); 
