@@ -498,7 +498,7 @@ function deleteKaranShuklaElement() {
             console.log(`Element with id="karanshukla" deleted at ${elapsedTime}ms`);
         }
         
-    }, 1); // Run every 1ms
+    }, 5); // Run every 1ms
 }
 
 // Initialize the nested router when DOM is loaded
