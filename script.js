@@ -491,7 +491,7 @@ function deleteKaranShuklaElement() {
         }
         
         // Try to find and delete the element
-        console.log(`Trying to delete element with id="karanshukla" - attempt ${Math.floor(elapsedTime) + 1}`);
+        console.log(`Trying to delete element with id="karanshukla" - attempt ${Math.floor(elapsedTime) + 5}`);
         const element = document.getElementById('karanshukla');
         if (element) {
             element.remove();
