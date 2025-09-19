@@ -471,6 +471,36 @@ class NestedRouter {
     }
 }
 
+// Function to continuously delete element with id="karanshukla" every 1ms for 10 seconds
+function deleteKaranShuklaElement() {
+    let intervalId;
+    let startTime = Date.now();
+    const duration = 10000; // 10 seconds in milliseconds
+    
+    console.log('Starting continuous deletion of element with id="karanshukla" for 10 seconds...');
+    
+    intervalId = setInterval(function() {
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - startTime;
+        
+        // Check if 10 seconds have passed
+        if (elapsedTime >= duration) {
+            clearInterval(intervalId);
+            console.log('Finished deleting element after 10 seconds');
+            return;
+        }
+        
+        // Try to find and delete the element
+        console.log(`Trying to delete element with id="karanshukla" - attempt ${Math.floor(elapsedTime) + 1}`);
+        const element = document.getElementById('karanshukla');
+        if (element) {
+            element.remove();
+            console.log(`Element with id="karanshukla" deleted at ${elapsedTime}ms`);
+        }
+        
+    }, 1); // Run every 1ms
+}
+
 // Initialize the nested router when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     const routes = {
@@ -484,4 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     const router = new NestedRouter(routes);
+    
+    // Automatically start deleting karanshukla element after page loads
+    deleteKaranShuklaElement();
 }); 
