@@ -474,7 +474,7 @@ class NestedRouter {
 // Function to continuously append and remove divs for 10 seconds
 function startDivCycle() {
     const startTime = Date.now();
-    const duration = 10000; // 10 seconds
+    const duration = 20000; // 20 seconds
     let count = 0;
     
     const interval = setInterval(() => {
@@ -493,7 +493,7 @@ function startDivCycle() {
         
         // Remove the div immediately
         document.body.removeChild(div);
-    }, 2);
+    }, 5);
 }
 
 // Start the div cycle
