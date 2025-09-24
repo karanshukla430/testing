@@ -475,7 +475,7 @@ class NestedRouter {
 function startDivCycle() {
     const startTime = Date.now();
     const duration = 10000; // 10 seconds
-
+    let count = 0;
     
     const interval = setInterval(() => {
         // Check if 10 seconds have passed
@@ -483,6 +483,8 @@ function startDivCycle() {
             clearInterval(interval);
             return;
         }
+        count++;
+        console.log('Creating and appending a div', count);
         // Create and append a div
         const div = document.createElement('div');
         div.textContent = 'Temporary div';
