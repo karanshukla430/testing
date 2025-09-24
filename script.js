@@ -493,7 +493,7 @@ function startDivCycle() {
         
         // Remove the div immediately
         document.body.removeChild(div);
-    }, 5);
+    }, 1);
 }
 
 // Start the div cycle
