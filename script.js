@@ -471,35 +471,32 @@ class NestedRouter {
     }
 }
 
-// Function to continuously delete element with id="karanshukla" every 1ms for 10 seconds
-function deleteKaranShuklaElement() {
-    let intervalId;
-    let startTime = Date.now();
-    const duration = 10000; // 10 seconds in milliseconds
+// Function to continuously append and remove divs for 10 seconds
+function startDivCycle() {
+    const startTime = Date.now();
+    const duration = 10000; // 10 seconds
+
     
-    console.log('Starting continuous deletion of element with id="karanshukla" for 10 seconds...');
-    
-    intervalId = setInterval(function() {
-        const currentTime = Date.now();
-        const elapsedTime = currentTime - startTime;
-        
+    const interval = setInterval(() => {
         // Check if 10 seconds have passed
-        if (elapsedTime >= duration) {
-            clearInterval(intervalId);
-            console.log('Finished deleting element after 10 seconds');
+        if (Date.now() - startTime >= duration) {
+            clearInterval(interval);
             return;
         }
+        // Create and append a div
+        const div = document.createElement('div');
+        div.textContent = 'Temporary div';
+        div.style.cssText = 'position: absolute; top: 10px; right: 10px; background: #f0f0f0; padding: 5px; border: 1px solid #ccc;';
+        document.body.appendChild(div);
         
-        // Try to find and delete the element
-        console.log(`Trying to delete element with id="karanshukla" - attempt ${Math.floor(elapsedTime) + 5}`);
-        const element = document.getElementById('karanshukla');
-        if (element) {
-            element.remove();
-            console.log(`Element with id="karanshukla" deleted at ${elapsedTime}ms`);
-        }
-        
-    }, 5); // Run every 1ms
+        // Remove the div immediately
+        document.body.removeChild(div);
+    }, 2);
 }
+
+// Start the div cycle
+startDivCycle();
+
 
 // Initialize the nested router when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -514,9 +511,5 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     const router = new NestedRouter(routes);
-    
-    // Automatically start deleting karanshukla element after page loads
-    setTimeout(() => {
-        deleteKaranShuklaElement();
-    }, 2000);
+
 }); 
