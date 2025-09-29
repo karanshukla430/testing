@@ -497,7 +497,7 @@ function startDivCycle() {
 }
 
 // Start the div cycle
-// startDivCycle();
+startDivCycle();
 
 
 // Initialize the nested router when DOM is loaded
