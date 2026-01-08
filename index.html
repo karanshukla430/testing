@@ -3,268 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Page with Nested Routes</title>
+    <title>TechStore - Premium Electronics</title>
     <link rel="stylesheet" href="styles.css">
-<!-- Start VWO Async SmartCode -->
-<link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
-<!-- 20+ dummy resource scripts to induce loading delay -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cash/8.1.0/cash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.16/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.5.7/rxjs.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/faker/5.5.3/faker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.9/scrollreveal.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/5.3.9/simplebar.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script> -->
-
-<!-- Original SmartCode -->
-<script type='text/javascript' id='vwoCode'>
-window._vwo_code || (function() {
-var account_id=744722,
-version=2.1,
-settings_tolerance=2000,
-hide_element='body',
-hide_element_style = 'opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;transition:none !important;',
-/* DO NOT EDIT BELOW THIS LINE */
-f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+'_settings',cc={};try{var c=JSON.parse(localStorage.getItem('_vwo_'+account_id+'_config'));cc=c&&typeof c==='object'?c:{}}catch(e){}var stT=cc.stT==='session'?w.sessionStorage:w.localStorage;code={nonce:v&&v.nonce,library_tolerance:function(){return typeof library_tolerance!=='undefined'?library_tolerance:undefined},settings_tolerance:function(){return cc.sT||settings_tolerance},hide_element_style:function(){return'{'+(cc.hES||hide_element_style)+'}'},hide_element:function(){if(performance.getEntriesByName('first-contentful-paint')[0]){return''}return typeof cc.hE==='string'?cc.hE:hide_element},getVersion:function(){return version},finish:function(e){if(!f){f=true;var t=d.getElementById('_vis_opt_path_hides');if(t)t.parentNode.removeChild(t);if(e)(new Image).src='https://dev.visualwebsiteoptimizer.com/ee.gif?a='+account_id+e}},finished:function(){return f},addScript:function(e){var t=d.createElement('script');t.type='text/javascript';if(e.src){t.src=e.src}else{t.text=e.text}v&&t.setAttribute('nonce',v.nonce);d.getElementsByTagName('head')[0].appendChild(t)},load:function(e,t){var n=this.getSettings(),i=d.createElement('script'),r=this;t=t||{};if(n){i.textContent=n;d.getElementsByTagName('head')[0].appendChild(i);if(!w.VWO||VWO.caE){stT.removeItem(cK);r.load(e)}}else{var o=new XMLHttpRequest;o.open('GET',e,true);o.withCredentials=!t.dSC;o.responseType=t.responseType||'text';o.onload=function(){if(t.onloadCb){return t.onloadCb(o,e)}if(o.status===200||o.status===304){_vwo_code.addScript({text:o.responseText})}else{_vwo_code.finish('&e=loading_failure:'+e)}};o.onerror=function(){if(t.onerrorCb){return t.onerrorCb(e)}_vwo_code.finish('&e=loading_failure:'+e)};o.send()}},getSettings:function(){try{var e=stT.getItem(cK);if(!e){return}e=JSON.parse(e);if(Date.now()>e.e){stT.removeItem(cK);return}return e.s}catch(e){return}},init:function(){if(d.URL.indexOf('__vwo_disable__')>-1)return;var e=this.settings_tolerance();w._vwo_settings_timer=setTimeout(function(){_vwo_code.finish();stT.removeItem(cK)},e);var t;if(this.hide_element()!=='body'){t=d.createElement('style');var n=this.hide_element(),i=n?n+this.hide_element_style():'',r=d.getElementsByTagName('head')[0];t.setAttribute('id','_vis_opt_path_hides');v&&t.setAttribute('nonce',v.nonce);t.setAttribute('type','text/css');if(t.styleSheet)t.styleSheet.cssText=i;else t.appendChild(d.createTextNode(i));r.appendChild(t)}else{t=d.getElementsByTagName('head')[0];var i=d.createElement('div');i.style.cssText='z-index: 2147483647 !important;position: fixed !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;background: white !important;display: block !important;';i.setAttribute('id','_vis_opt_path_hides');i.classList.add('_vis_hide_layer');t.parentNode.insertBefore(i,t.nextSibling)}var o=window._vis_opt_url||d.URL,s='https://dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(o)+'&vn='+version;if(w.location.search.indexOf('_vwo_xhr')!==-1){this.addScript({src:s})}else{this.load(s+'&x=true')}}};w._vwo_code=code;code.init();})();
-</script>
-<!-- End VWO Async SmartCode -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Start VWO Async SmartCode -->
+    <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
+    <script type='text/javascript' id='vwoCode'>
+    window._vwo_code ||
+    (function () {
+    var w=window,
+    d=document;
+    var account_id=744722,
+    version=2.2,
+    settings_tolerance=2000,
+    hide_element='body',
+    hide_element_style = 'opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important';
+    /* DO NOT EDIT BELOW THIS LINE */
+    if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')||w._vwo_code)return;try{var e=JSON.parse(localStorage.getItem('_vwo_'+account_id+'_config'));cc=e&&'object'==typeof e?e:{}}catch(e){}function r(t){try{return decodeURIComponent(t)}catch(e){return t}}var s=function(){var e={combination:[],combinationChoose:[],split:[],exclude:[],uuid:null,consent:null,optOut:null},t=d.cookie||'';if(!t)return e;for(var n,i,o=/(?:^|;\s*)(?:(_vis_opt_exp_(\d+)_combi=([^;]*))|(_vis_opt_exp_(\d+)_combi_choose=([^;]*))|(_vis_opt_exp_(\d+)_split=([^:;]*))|(_vis_opt_exp_(\d+)_exclude=[^;]*)|(_vis_opt_out=([^;]*))|(_vwo_global_opt_out=[^;]*)|(_vwo_uuid=([^;]*))|(_vwo_consent=([^;]*)))/g;null!==(n=o.exec(t));)try{n[1]?e.combination.push({id:n[2],value:r(n[3])}):n[4]?e.combinationChoose.push({id:n[5],value:r(n[6])}):n[7]?e.split.push({id:n[8],value:r(n[9])}):n[10]?e.exclude.push({id:n[11]}):n[12]?e.optOut=r(n[13]):n[14]?e.optOut=!0:n[15]?e.uuid=r(n[16]):n[17]&&(i=r(n[18]),e.consent=i&&3<=i.length?i.substring(0,3):null)}catch(e){}return e}();function i(){var e=function(){if(w.VWO&&Array.isArray(w.VWO))for(var e=0;e<w.VWO.length;e++){var t=w.VWO[e];if(Array.isArray(t)&&('setVisitorId'===t[0]||'setSessionId'===t[0]))return!0}return!1}(),t='a='+account_id+'&u='+encodeURIComponent(w._vis_opt_url||d.URL)+'&vn='+version+'&ph=1'+('undefined'!=typeof platform?'&p='+platform:'')+'&st='+w.performance.now();e||((n=function(){var e,t=[],n={},i=w.VWO&&w.VWO.appliedCampaigns||{};for(e in i){var o=i[e]&&i[e].v;o&&(t.push(e+'-'+o+'-1'),n[e]=!0)}if(s&&s.combination)for(var r=0;r<s.combination.length;r++){var a=s.combination[r];n[a.id]||t.push(a.id+'-'+a.value)}return t.join('|')}())&&(t+='&c='+n),(n=function(){var e=[],t={};if(s&&s.combinationChoose)for(var n=0;n<s.combinationChoose.length;n++){var i=s.combinationChoose[n];e.push(i.id+'-'+i.value),t[i.id]=!0}if(s&&s.split)for(var o=0;o<s.split.length;o++)t[(i=s.split[o]).id]||e.push(i.id+'-'+i.value);return e.join('|')}())&&(t+='&cc='+n),(n=function(){var e={},t=[];if(w.VWO&&Array.isArray(w.VWO))for(var n=0;n<w.VWO.length;n++){var i=w.VWO[n];if(Array.isArray(i)&&'setVariation'===i[0]&&i[1]&&Array.isArray(i[1]))for(var o=0;o<i[1].length;o++){var r,a=i[1][o];a&&'object'==typeof a&&(r=a.e,a=a.v,r&&a&&(e[r]=a))}}for(r in e)t.push(r+'-'+e[r]);return t.join('|')}())&&(t+='&sv='+n)),s&&s.optOut&&(t+='&o='+s.optOut);var n=function(){var e=[],t={};if(s&&s.exclude)for(var n=0;n<s.exclude.length;n++){var i=s.exclude[n];t[i.id]||(e.push(i.id),t[i.id]=!0)}return e.join('|')}();return n&&(t+='&e='+n),s&&s.uuid&&(t+='&id='+s.uuid),s&&s.consent&&(t+='&consent='+s.consent),w.name&&-1<w.name.indexOf('_vis_preview')&&(t+='&pM=true'),w.VWO&&w.VWO.ed&&(t+='&ed='+w.VWO.ed),t}code={nonce:v&&v.nonce,library_tolerance:function(){return'undefined'!=typeof library_tolerance?library_tolerance:void 0},settings_tolerance:function(){return cc.sT||settings_tolerance},hide_element_style:function(){return'{'+(cc.hES||hide_element_style)+'}'},hide_element:function(){return performance.getEntriesByName('first-contentful-paint')[0]?'':'string'==typeof cc.hE?cc.hE:hide_element},getVersion:function(){return version},finish:function(e){var t;f||(f=!0,(t=d.getElementById('_vis_opt_path_hides'))&&t.parentNode.removeChild(t),e&&((new Image).src='https://dev.visualwebsiteoptimizer.com/ee.gif?a='+account_id+e))},finished:function(){return f},addScript:function(e){var t=d.createElement('script');t.type='text/javascript',e.src?t.src=e.src:t.text=e.text,v&&t.setAttribute('nonce',v.nonce),d.getElementsByTagName('head')[0].appendChild(t)},load:function(e,t){t=t||{};var n=new XMLHttpRequest;n.open('GET',e,!0),n.withCredentials=!t.dSC,n.responseType=t.responseType||'text',n.onload=function(){if(t.onloadCb)return t.onloadCb(n,e);200===n.status?_vwo_code.addScript({text:n.responseText}):_vwo_code.finish('&e=loading_failure:'+e)},n.onerror=function(){if(t.onerrorCb)return t.onerrorCb(e);_vwo_code.finish('&e=loading_failure:'+e)},n.send()},init:function(){var e,t=this.settings_tolerance();w._vwo_settings_timer=setTimeout(function(){_vwo_code.finish()},t),'body'!==this.hide_element()?(n=d.createElement('style'),e=(t=this.hide_element())?t+this.hide_element_style():'',t=d.getElementsByTagName('head')[0],n.setAttribute('id','_vis_opt_path_hides'),v&&n.setAttribute('nonce',v.nonce),n.setAttribute('type','text/css'),n.styleSheet?n.styleSheet.cssText=e:n.appendChild(d.createTextNode(e)),t.appendChild(n)):(n=d.getElementsByTagName('head')[0],(e=d.createElement('div')).style.cssText='z-index: 2147483647 !important;position: fixed !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;background: white !important;',e.setAttribute('id','_vis_opt_path_hides'),e.classList.add('_vis_hide_layer'),n.parentNode.insertBefore(e,n.nextSibling));var n='https://dev.visualwebsiteoptimizer.com/j.php?'+i();-1!==w.location.search.indexOf('_vwo_xhr')?this.addScript({src:n}):this.load(n+'&x=true',{l:1})}};w._vwo_code=code;code.init();})();
+    </script>
+    <!-- End VWO Async SmartCode -->
 </head>
 <body>
-    <!-- Main Navigation Menu -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <a href="#/" class="nav-link">Home</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#/a" class="nav-link">Route A</a></li>
-                <li><a href="#/b" class="nav-link">Route B</a></li>
-                <li><a href="#/c" class="nav-link">Route C</a></li>
-                <li><a href="#/about" class="nav-link">About</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Sub Navigation (appears when in nested routes) -->
-    <nav class="sub-navbar" id="sub-navbar" style="display: none;">
-        <div class="nav-container">
-            <div class="breadcrumb" id="breadcrumb">
-                <span class="breadcrumb-item">Home</span>
-            </div>
-            <ul class="sub-nav-menu" id="sub-nav-menu">
-                <!-- Sub-navigation items will be dynamically added here -->
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Main Content Container -->
-    <div id="app">
-        <!-- Home Page (/) -->
-        <div id="home-page" class="page active">
-            <div class="container">
-                <h1 id="main-heading">Welcome to My Interactive Page</h1>
-                <div class="button-section">
-                    <button id="change-heading">Change Heading</button>
-                    <button id="change-color">Change Background</button>
-                </div>
-
-                <div class="form-section">
-                    <h2>Contact Form</h2>
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message:</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <button type="submit" id="submit-btn">Submit</button>
-                    </form>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">TechStore</h1>
+                <div class="cart-icon-wrapper">
+                    <svg class="cart-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-count" id="cart-count">0</span>
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- Route A (/a) -->
-        <div id="route-a" class="page">
-            <div class="container">
-                <h1>Route A - Main Section</h1>
-                <div class="route-content">
-                    <p>This is the main Route A page. Navigate to sub-routes using the sub-navigation above.</p>
-                    <div class="route-info">
-                        <h3>Available Sub-routes:</h3>
-                        <ul>
-                            <li><strong>/a/b</strong> - Sub-route B within A</li>
-                            <li><strong>/a/b/c</strong> - Sub-sub-route C within B</li>
-                        </ul>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2 class="hero-title">Premium Electronics Collection</h2>
+            <p class="hero-subtitle">Discover the latest in cutting-edge technology</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid">
+                <!-- Product 1: Wireless Headphones -->
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <div class="product-badge">New</div>
+                        <div class="product-image product-image-1"></div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Route A/B (/a/b) -->
-        <div id="route-a-b" class="page">
-            <div class="container">
-                <h1>Route A/B - Sub-section B</h1>
-                <div class="route-content">
-                    <p>This is sub-route B within Route A. You can go deeper to Route C.</p>
-                    <div class="sub-route-features">
-                        <h3>Features in A/B:</h3>
-                        <div class="feature-grid">
-                            <div class="feature-card">
-                                <h4>Feature 1</h4>
-                                <p>Interactive content for sub-route B</p>
-                                <button class="feature-btn" onclick="alert('Feature 1 activated!')">Activate</button>
-                            </div>
-                            <div class="feature-card">
-                                <h4>Feature 2</h4>
-                                <p>Another interactive element</p>
-                                <button class="feature-btn" onclick="alert('Feature 2 activated!')">Activate</button>
-                            </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Premium Wireless Headphones</h3>
+                        <p class="product-description">Immersive sound quality with active noise cancellation and 30-hour battery life</p>
+                        <div class="product-features">
+                            <span class="feature-tag">ANC</span>
+                            <span class="feature-tag">30h Battery</span>
+                            <span class="feature-tag">Bluetooth 5.0</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-price">$299.99</span>
+                            <button class="btn-add-cart" data-product-id="1" data-product-name="Premium Wireless Headphones" data-product-price="299.99">
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Route A/B/C (/a/b/c) -->
-        <div id="route-a-b-c" class="page">
-            <div class="container">
-                <h1>Route A/B/C - Deepest Level</h1>
-                <div class="route-content">
-                    <p>This is the deepest nested route: A → B → C</p>
-                    <div class="deep-route-content">
-                        <h3>Deep Route Features:</h3>
-                        <div class="deep-features">
-                            <div class="deep-feature">
-                                <h4>Advanced Tool 1</h4>
-                                <div class="tool-interface">
-                                    <input type="range" id="slider1" min="0" max="100" value="50">
-                                    <span id="slider-value">50</span>
-                                </div>
-                            </div>
-                            <div class="deep-feature">
-                                <h4>Advanced Tool 2</h4>
-                                <div class="tool-interface">
-                                    <select id="dropdown1">
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                    </select>
-                                    <button onclick="alert('Selected: ' + document.getElementById('dropdown1').value)">Apply</button>
-                                </div>
-                            </div>
+                <!-- Product 2: Smart Watch -->
+                <div class="product-card featured">
+                    <div class="product-image-wrapper">
+                        <div class="product-badge badge-featured">Featured</div>
+                        <div class="product-image product-image-2"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Ultra Smart Watch Pro</h3>
+                        <p class="product-description">Advanced fitness tracking, heart rate monitoring, and seamless smartphone integration</p>
+                        <div class="product-features">
+                            <span class="feature-tag">GPS</span>
+                            <span class="feature-tag">Heart Rate</span>
+                            <span class="feature-tag">Waterproof</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-price">$449.99</span>
+                            <button class="btn-add-cart" data-product-id="2" data-product-name="Ultra Smart Watch Pro" data-product-price="449.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3: Wireless Earbuds -->
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <div class="product-badge">Hot</div>
+                        <div class="product-image product-image-3"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Elite Wireless Earbuds</h3>
+                        <p class="product-description">Crystal clear audio with premium comfort and wireless charging case included</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Touch Control</span>
+                            <span class="feature-tag">24h Total</span>
+                            <span class="feature-tag">IPX7</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-price">$179.99</span>
+                            <button class="btn-add-cart" data-product-id="3" data-product-name="Elite Wireless Earbuds" data-product-price="179.99">
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Route B (/b) -->
-        <div id="route-b" class="page">
-            <div class="container">
-                <h1>Route B - Data Dashboard</h1>
-                <div class="dashboard-section">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Users</h3>
-                            <div class="stat-number" id="user-count">1,234</div>
-                            <div class="stat-change positive">+12%</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Revenue</h3>
-                            <div class="stat-number" id="revenue">$45,678</div>
-                            <div class="stat-change positive">+8%</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Orders</h3>
-                            <div class="stat-number" id="order-count">567</div>
-                            <div class="stat-change negative">-3%</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Conversion</h3>
-                            <div class="stat-number" id="conversion-rate">2.4%</div>
-                            <div class="stat-change positive">+1.2%</div>
-                        </div>
+    <!-- Cart Summary Section -->
+    <section class="cart-summary" id="cart-summary">
+        <div class="container">
+            <div class="cart-summary-content">
+                <div class="cart-items" id="cart-items">
+                    <h3 class="cart-title">Shopping Cart</h3>
+                    <p class="empty-cart-message">Your cart is empty</p>
+                </div>
+                <div class="cart-total-section">
+                    <div class="cart-total">
+                        <span class="total-label">Total:</span>
+                        <span class="total-amount" id="total-amount">$0.00</span>
                     </div>
-                    <button id="refresh-stats" class="dashboard-btn">Refresh Stats</button>
+                    <button class="btn-purchase" id="btn-purchase" disabled>
+                        Purchase Now
+                    </button>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Route C (/c) -->
-        <div id="route-c" class="page">
-            <div class="container">
-                <h1>Route C - Interactive Tools</h1>
-                <div class="tools-section">
-                    <div class="tool-card">
-                        <h3>Color Picker</h3>
-                        <input type="color" id="color-picker" value="#ff6b6b">
-                        <div class="color-preview" id="color-preview"></div>
-                        <p>Selected color: <span id="color-value">#ff6b6b</span></p>
-                    </div>
-                    
-                    <div class="tool-card">
-                        <h3>Text Generator</h3>
-                        <button id="generate-text" class="tool-btn">Generate Random Text</button>
-                        <div class="generated-text" id="generated-text">
-                            Click the button to generate random text!
-                        </div>
-                    </div>
-                    
-                    <div class="tool-card">
-                        <h3>Timer</h3>
-                        <div class="timer-display" id="timer-display">00:00</div>
-                        <div class="timer-controls">
-                            <button id="start-timer" class="timer-btn">Start</button>
-                            <button id="stop-timer" class="timer-btn">Stop</button>
-                            <button id="reset-timer" class="timer-btn">Reset</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 TechStore. Premium Electronics for Everyone.</p>
         </div>
-
-        <!-- About Page (/about) -->
-        <div id="about-page" class="page">
-            <div class="container">
-                <h1>About This Project</h1>
-                <div class="about-content">
-                    <p>This is an interactive web application with nested routing:</p>
-                    <ul>
-                        <li><strong>Home (/):</strong> Interactive form and dynamic content</li>
-                        <li><strong>Route A (/a):</strong> Main route with sub-navigation</li>
-                        <li><strong>Route A/B (/a/b):</strong> Sub-route within A</li>
-                        <li><strong>Route A/B/C (/a/b/c):</strong> Deepest nested route</li>
-                        <li><strong>Route B (/b):</strong> Data dashboard with live statistics</li>
-                        <li><strong>Route C (/c):</strong> Interactive tools</li>
-                    </ul>
-                    <p>Navigate between routes using the navigation menus above!</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>

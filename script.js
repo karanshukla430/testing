@@ -1,517 +1,370 @@
-// Nested Router Implementation
-class NestedRouter {
-    constructor(routes) {
-        this.routes = routes;
-        this.currentRoute = null;
-        this.currentPath = [];
-        this.init();
-    }
+// Shopping Cart State
+let cart = [];
 
-    init() {
-        // Handle initial route
-        this.handleRoute();
-        
-        // Listen for hash changes
-        window.addEventListener('hashchange', () => {
-            this.handleRoute();
-        });
-    }
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function () {
+    initializeEventListeners();
+    updateCartDisplay();
+});
 
-    handleRoute() {
-        const hash = window.location.hash || '#/';
-        const pathSegments = hash.split('/').filter(segment => segment !== '');
-        
-        // Remove the # from the first segment
-        if (pathSegments.length > 0 && pathSegments[0].startsWith('#')) {
-            pathSegments[0] = pathSegments[0].substring(1);
-        }
-        
-        this.navigateToPath(pathSegments);
-    }
+// Initialize all event listeners
+function initializeEventListeners() {
+    // Add to Cart buttons
+    const addToCartButtons = document.querySelectorAll('.btn-add-cart');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', handleAddToCart);
+    });
 
-    navigateToPath(pathSegments) {
-        // Build the route path
-        const routePath = pathSegments.length > 0 ? '/' + pathSegments.join('/') : '/';
-        const routeId = this.getRouteId(pathSegments);
-        
-        if (routeId && routeId !== this.currentRoute) {
-            this.currentPath = pathSegments;
-            this.navigateTo(routeId, pathSegments);
-        }
-    }
-
-    getRouteId(pathSegments) {
-        // Map path segments to route IDs
-        if (pathSegments.length === 0) return 'home-page';
-        if (pathSegments.length === 1) {
-            switch(pathSegments[0]) {
-                case 'a': return 'route-a';
-                case 'b': return 'route-b';
-                case 'c': return 'route-c';
-                case 'about': return 'about-page';
-                default: return 'home-page';
-            }
-        }
-        if (pathSegments.length === 2) {
-            if (pathSegments[0] === 'a' && pathSegments[1] === 'b') {
-                return 'route-a-b';
-            }
-        }
-        if (pathSegments.length === 3) {
-            if (pathSegments[0] === 'a' && pathSegments[1] === 'b' && pathSegments[2] === 'c') {
-                return 'route-a-b-c';
-            }
-        }
-        return 'home-page';
-    }
-
-    navigateTo(routeId, pathSegments) {
-        // Hide all pages
-        document.querySelectorAll('.page').forEach(page => {
-            page.classList.remove('active');
-        });
-        
-        // Show target page
-        const targetPage = document.getElementById(routeId);
-        if (targetPage) {
-            targetPage.classList.add('active');
-        }
-        
-        // Update main navigation active state
-        this.updateMainNavigation(pathSegments);
-        
-        // Update sub-navigation and breadcrumbs
-        this.updateSubNavigation(pathSegments);
-        
-        this.currentRoute = routeId;
-        
-        // Initialize route-specific functionality
-        this.initRouteFunctionality(routeId);
-    }
-
-    updateMainNavigation(pathSegments) {
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        
-        // Activate the main route link
-        if (pathSegments.length > 0) {
-            const mainRoute = pathSegments[0];
-            const activeLink = document.querySelector(`[href="#/${mainRoute}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-        } else {
-            // Home page
-            const homeLink = document.querySelector('[href="#/"]');
-            if (homeLink) {
-                homeLink.classList.add('active');
-            }
-        }
-    }
-
-    updateSubNavigation(pathSegments) {
-        const subNavbar = document.getElementById('sub-navbar');
-        const breadcrumb = document.getElementById('breadcrumb');
-        const subNavMenu = document.getElementById('sub-nav-menu');
-        
-        // Show/hide sub-navigation based on route depth
-        if (pathSegments.length > 1) {
-            subNavbar.style.display = 'block';
-            this.updateBreadcrumb(breadcrumb, pathSegments);
-            this.updateSubNavMenu(subNavMenu, pathSegments);
-        } else {
-            subNavbar.style.display = 'none';
-        }
-    }
-
-    updateBreadcrumb(breadcrumb, pathSegments) {
-        breadcrumb.innerHTML = '';
-        
-        // Add Home link
-        const homeItem = document.createElement('span');
-        homeItem.className = 'breadcrumb-item';
-        homeItem.textContent = 'Home';
-        homeItem.onclick = () => this.navigateToPath([]);
-        breadcrumb.appendChild(homeItem);
-        
-        // Add path segments
-        pathSegments.forEach((segment, index) => {
-            // Add separator
-            const separator = document.createElement('span');
-            separator.className = 'breadcrumb-separator';
-            separator.textContent = ' > ';
-            breadcrumb.appendChild(separator);
-            
-            // Add segment
-            const segmentItem = document.createElement('span');
-            segmentItem.className = 'breadcrumb-item';
-            segmentItem.textContent = this.formatSegmentName(segment);
-            
-            // Make it clickable if not the last segment
-            if (index < pathSegments.length - 1) {
-                segmentItem.onclick = () => {
-                    const newPath = pathSegments.slice(0, index + 1);
-                    this.navigateToPath(newPath);
-                };
-            } else {
-                segmentItem.classList.add('active');
-            }
-            
-            breadcrumb.appendChild(segmentItem);
-        });
-    }
-
-    updateSubNavMenu(subNavMenu, pathSegments) {
-        subNavMenu.innerHTML = '';
-        
-        // Add sub-navigation based on current route
-        if (pathSegments[0] === 'a') {
-            if (pathSegments.length === 1) {
-                // In route A, show link to B
-                const linkB = this.createSubNavLink('B', ['a', 'b'], pathSegments);
-                subNavMenu.appendChild(linkB);
-            } else if (pathSegments.length === 2 && pathSegments[1] === 'b') {
-                // In route A/B, show link to C
-                const linkC = this.createSubNavLink('C', ['a', 'b', 'c'], pathSegments);
-                subNavMenu.appendChild(linkC);
-            }
-        }
-    }
-
-    createSubNavLink(text, targetPath, currentPath) {
-        const li = document.createElement('li');
-        const link = document.createElement('a');
-        link.href = '#/' + targetPath.join('/');
-        link.className = 'sub-nav-link';
-        link.textContent = text;
-        
-        // Check if this is the active sub-route
-        if (targetPath.length === currentPath.length && 
-            targetPath.every((segment, index) => segment === currentPath[index])) {
-            link.classList.add('active');
-        }
-        
-        link.onclick = (e) => {
-            e.preventDefault();
-            this.navigateToPath(targetPath);
-        };
-        
-        li.appendChild(link);
-        return li;
-    }
-
-    formatSegmentName(segment) {
-        // Convert route segments to display names
-        const nameMap = {
-            'a': 'Route A',
-            'b': 'Route B', 
-            'c': 'Route C',
-            'about': 'About'
-        };
-        return nameMap[segment] || segment;
-    }
-
-    initRouteFunctionality(routeId) {
-        switch(routeId) {
-            case 'home-page':
-                this.initHomePage();
-                break;
-            case 'route-a':
-                this.initRouteA();
-                break;
-            case 'route-a-b':
-                this.initRouteAB();
-                break;
-            case 'route-a-b-c':
-                this.initRouteABC();
-                break;
-            case 'route-b':
-                this.initRouteB();
-                break;
-            case 'route-c':
-                this.initRouteC();
-                break;
-            case 'about-page':
-                // About page doesn't need special initialization
-                break;
-        }
-    }
-
-    // Home Page Functionality
-    initHomePage() {
-        const mainHeading = document.getElementById('main-heading');
-        const changeHeadingBtn = document.getElementById('change-heading');
-        const changeColorBtn = document.getElementById('change-color');
-        const contactForm = document.getElementById('contact-form');
-
-        if (!mainHeading || !changeHeadingBtn || !changeColorBtn || !contactForm) return;
-
-        const headings = [
-            "Welcome to My Interactive Page",
-            "Hello, World!",
-            "Interactive Web Page",
-            "Click Me Again!",
-            "You're Awesome!"
-        ];
-
-        const colors = [
-            "#f0f2f5",
-            "#e3f2fd",
-            "#f3e5f5",
-            "#e8f5e9",
-            "#fff3e0"
-        ];
-
-        let headingIndex = 0;
-        let colorIndex = 0;
-
-        // Change heading on button click
-        changeHeadingBtn.onclick = function() {
-            headingIndex = (headingIndex + 1) % headings.length;
-            mainHeading.textContent = headings[headingIndex];
-            mainHeading.style.color = getRandomColor();
-        };
-
-        // Change background color on button click
-        changeColorBtn.onclick = function() {
-            colorIndex = (colorIndex + 1) % colors.length;
-            document.body.style.backgroundColor = colors[colorIndex];
-        };
-
-        // Handle form submission
-        contactForm.onsubmit = function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // Show success message
-            alert(`Thank you for your message, ${name}! We'll get back to you at ${email} soon.`);
-            
-            // Reset form
-            this.reset();
-        };
-
-        // Helper function to generate random colors
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-    }
-
-    // Route A Functionality
-    initRouteA() {
-        // Route A specific functionality can be added here
-        console.log('Route A initialized');
-    }
-
-    // Route A/B Functionality
-    initRouteAB() {
-        // Route A/B specific functionality can be added here
-        console.log('Route A/B initialized');
-    }
-
-    // Route A/B/C Functionality
-    initRouteABC() {
-        const slider1 = document.getElementById('slider1');
-        const sliderValue = document.getElementById('slider-value');
-        
-        if (slider1 && sliderValue) {
-            slider1.oninput = function() {
-                sliderValue.textContent = this.value;
-            };
-        }
-        
-        console.log('Route A/B/C initialized');
-    }
-
-    // Route B - Dashboard Functionality
-    initRouteB() {
-        const refreshBtn = document.getElementById('refresh-stats');
-        const statNumbers = {
-            'user-count': { min: 1000, max: 2000, format: 'number' },
-            'revenue': { min: 30000, max: 60000, format: 'currency' },
-            'order-count': { min: 400, max: 800, format: 'number' },
-            'conversion-rate': { min: 1.5, max: 4.0, format: 'percentage' }
-        };
-
-        if (!refreshBtn) return;
-
-        refreshBtn.onclick = function() {
-            Object.keys(statNumbers).forEach(id => {
-                const element = document.getElementById(id);
-                const config = statNumbers[id];
-                
-                if (element) {
-                    const newValue = Math.random() * (config.max - config.min) + config.min;
-                    let displayValue;
-                    
-                    switch(config.format) {
-                        case 'number':
-                            displayValue = Math.floor(newValue).toLocaleString();
-                            break;
-                        case 'currency':
-                            displayValue = '$' + Math.floor(newValue).toLocaleString();
-                            break;
-                        case 'percentage':
-                            displayValue = newValue.toFixed(1) + '%';
-                            break;
-                    }
-                    
-                    // Animate the number change
-                    element.style.transform = 'scale(1.1)';
-                    element.style.color = '#4CAF50';
-                    
-                    setTimeout(() => {
-                        element.textContent = displayValue;
-                        element.style.transform = 'scale(1)';
-                        element.style.color = '#333';
-                    }, 200);
-                }
-            });
-        };
-    }
-
-    // Route C - Tools Functionality
-    initRouteC() {
-        this.initColorPicker();
-        this.initTextGenerator();
-        this.initTimer();
-    }
-
-    initColorPicker() {
-        const colorPicker = document.getElementById('color-picker');
-        const colorPreview = document.getElementById('color-preview');
-        const colorValue = document.getElementById('color-value');
-
-        if (!colorPicker || !colorPreview || !colorValue) return;
-
-        colorPicker.onchange = function() {
-            const color = this.value;
-            colorPreview.style.backgroundColor = color;
-            colorValue.textContent = color;
-        };
-    }
-
-    initTextGenerator() {
-        const generateBtn = document.getElementById('generate-text');
-        const textDisplay = document.getElementById('generated-text');
-
-        if (!generateBtn || !textDisplay) return;
-
-        const texts = [
-            "The quick brown fox jumps over the lazy dog.",
-            "All work and no play makes Jack a dull boy.",
-            "To be or not to be, that is the question.",
-            "A journey of a thousand miles begins with a single step.",
-            "The only way to do great work is to love what you do.",
-            "Life is what happens when you're busy making other plans.",
-            "Success is not final, failure is not fatal.",
-            "The future belongs to those who believe in the beauty of their dreams."
-        ];
-
-        generateBtn.onclick = function() {
-            const randomText = texts[Math.floor(Math.random() * texts.length)];
-            textDisplay.style.opacity = '0';
-            
-            setTimeout(() => {
-                textDisplay.textContent = randomText;
-                textDisplay.style.opacity = '1';
-            }, 200);
-        };
-    }
-
-    initTimer() {
-        const timerDisplay = document.getElementById('timer-display');
-        const startBtn = document.getElementById('start-timer');
-        const stopBtn = document.getElementById('stop-timer');
-        const resetBtn = document.getElementById('reset-timer');
-
-        if (!timerDisplay || !startBtn || !stopBtn || !resetBtn) return;
-
-        let timer = null;
-        let seconds = 0;
-        let isRunning = false;
-
-        function updateDisplay() {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        startBtn.onclick = function() {
-            if (!isRunning) {
-                isRunning = true;
-                timer = setInterval(() => {
-                    seconds++;
-                    updateDisplay();
-                }, 1000);
-            }
-        };
-
-        stopBtn.onclick = function() {
-            if (isRunning) {
-                isRunning = false;
-                clearInterval(timer);
-            }
-        };
-
-        resetBtn.onclick = function() {
-            isRunning = false;
-            clearInterval(timer);
-            seconds = 0;
-            updateDisplay();
-        };
-    }
+    // Purchase button
+    const purchaseButton = document.getElementById('btn-purchase');
+    purchaseButton.addEventListener('click', handlePurchase);
 }
 
-// Function to continuously append and remove divs for 10 seconds
-function startDivCycle() {
-    const startTime = Date.now();
-    const duration = 20000; // 20 seconds
-    let count = 0;
-    
-    const interval = setInterval(() => {
-        // Check if 10 seconds have passed
-        if (Date.now() - startTime >= duration) {
-            clearInterval(interval);
-            return;
-        }
-        count++;
-        console.log('Creating and appending a div', count);
-        // Create and append a div
-        const div = document.createElement('div');
-        div.textContent = 'Temporary div';
-        div.style.cssText = 'position: absolute; top: 10px; right: 10px; background: #f0f0f0; padding: 5px; border: 1px solid #ccc;';
-        document.body.appendChild(div);
-        
-        // Remove the div immediately
-        document.body.removeChild(div);
-    }, 1);
+// Handle Add to Cart button click
+function handleAddToCart(event) {
+    const button = event.currentTarget;
+    const productId = button.getAttribute('data-product-id');
+    const productName = button.getAttribute('data-product-name');
+    const productPrice = parseFloat(button.getAttribute('data-product-price'));
+
+    // Custom code for Add to Cart
+    console.log('=== ADD TO CART CLICKED ===');
+    console.log('Product ID:', productId);
+    console.log('Product Name:', productName);
+    console.log('Product Price:', productPrice);
+    console.log('Timestamp:', new Date().toISOString());
+
+    // Add product to cart
+    addToCart(productId, productName, productPrice);
+
+    // Visual feedback
+    button.classList.add('added');
+    const originalText = button.textContent;
+    button.textContent = 'Added!';
+
+    setTimeout(() => {
+        button.classList.remove('added');
+        button.textContent = originalText;
+    }, 1000);
+
+    // Animate cart icon
+    animateCartIcon();
+
+    // You can add your custom logic here
+    // For example: send analytics, update database, show notification, etc.
+    customAddToCartLogic(productId, productName, productPrice);
 }
 
-// Start the div cycle
-// startDivCycle();
+// Custom Add to Cart Logic (You can modify this)
+function customAddToCartLogic(productId, productName, productPrice) {
+    // Example: Log to console
+    console.log('Custom Add to Cart Logic Executed');
 
+    // Example: Show a custom alert
+    // alert(`${productName} has been added to your cart!`);
 
-// Initialize the nested router when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    const routes = {
-        '#/': 'home-page',
-        '#/a': 'route-a',
-        '#/a/b': 'route-a-b',
-        '#/a/b/c': 'route-a-b-c',
-        '#/b': 'route-b',
-        '#/c': 'route-c',
-        '#/about': 'about-page'
+    // Example: Send to analytics
+    // trackEvent('add_to_cart', { product_id: productId, product_name: productName, price: productPrice });
+
+    // Example: Save to localStorage
+    localStorage.setItem('lastAddedProduct', JSON.stringify({
+        id: productId,
+        name: productName,
+        price: productPrice,
+        timestamp: new Date().toISOString()
+    }));
+
+    // VWO Event Tracking - Add to Cart
+    // Do not change anything in the following two lines
+    window.VWO = window.VWO || [];
+    VWO.event = VWO.event || function () { VWO.push(["event"].concat([].slice.call(arguments))) };
+
+    // Replace the property values with your actual values
+    VWO.event("addToCart", {
+        "productCategory": "Electronics",
+        "cartAmount": productPrice
+    });
+
+    // Example: Custom notification
+    showCustomNotification(`${productName} added to cart!`);
+}
+
+// Add product to cart array
+function addToCart(productId, productName, productPrice) {
+    // Check if product already exists in cart
+    const existingProduct = cart.find(item => item.id === productId);
+
+    if (existingProduct) {
+        existingProduct.quantity += 1;
+    } else {
+        cart.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            quantity: 1
+        });
+    }
+
+    updateCartDisplay();
+}
+
+// Update cart display
+function updateCartDisplay() {
+    const cartCountElement = document.getElementById('cart-count');
+    const cartItemsElement = document.getElementById('cart-items');
+    const totalAmountElement = document.getElementById('total-amount');
+    const purchaseButton = document.getElementById('btn-purchase');
+
+    // Update cart count
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCountElement.textContent = totalItems;
+
+    // Update cart items display
+    if (cart.length === 0) {
+        cartItemsElement.innerHTML = `
+            <h3 class="cart-title">Shopping Cart</h3>
+            <p class="empty-cart-message">Your cart is empty</p>
+        `;
+        purchaseButton.disabled = true;
+    } else {
+        let cartHTML = '<h3 class="cart-title">Shopping Cart</h3><div class="cart-items-list">';
+
+        cart.forEach(item => {
+            cartHTML += `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-quantity">Quantity: ${item.quantity}</div>
+                    </div>
+                    <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                </div>
+            `;
+        });
+
+        cartHTML += '</div>';
+        cartItemsElement.innerHTML = cartHTML;
+        purchaseButton.disabled = false;
+    }
+
+    // Update total amount
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    totalAmountElement.textContent = `$${total.toFixed(2)}`;
+}
+
+// Handle Purchase button click
+function handlePurchase(event) {
+    if (cart.length === 0) {
+        return;
+    }
+
+    // Custom code for Purchase
+    console.log('=== PURCHASE BUTTON CLICKED ===');
+    console.log('Cart Contents:', JSON.stringify(cart, null, 2));
+    console.log('Total Items:', cart.reduce((sum, item) => sum + item.quantity, 0));
+    console.log('Total Amount:', cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2));
+    console.log('Timestamp:', new Date().toISOString());
+
+    // You can add your custom purchase logic here
+    customPurchaseLogic();
+}
+
+// Custom Purchase Logic (You can modify this)
+function customPurchaseLogic() {
+    console.log('Custom Purchase Logic Executed');
+
+    // Example: Calculate order summary
+    const orderSummary = {
+        orderId: generateOrderId(),
+        items: cart,
+        totalItems: cart.reduce((sum, item) => sum + item.quantity, 0),
+        subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+        tax: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * 0.1, // 10% tax
+        timestamp: new Date().toISOString()
     };
 
-    const router = new NestedRouter(routes);
+    orderSummary.total = orderSummary.subtotal + orderSummary.tax;
 
-}); 
+    console.log('Order Summary:', orderSummary);
+
+    // Example: Save to localStorage
+    localStorage.setItem('lastOrder', JSON.stringify(orderSummary));
+
+    // Example: Send to backend API
+    // fetch('/api/orders', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(orderSummary)
+    // });
+
+    // VWO Event Tracking - Purchase
+    // Do not change anything in the following two lines
+    window.VWO = window.VWO || [];
+    VWO.event = VWO.event || function () { VWO.push(["event"].concat([].slice.call(arguments))) };
+
+    // Replace the property values with your actual values
+    const avgPrice = orderSummary.totalItems > 0 ? orderSummary.total / orderSummary.totalItems : 0;
+    VWO.event("purchase", {
+        "totalPrice": orderSummary.total,
+        "avg": avgPrice,
+        "itemsQuantity": orderSummary.totalItems,
+        "productCategory": "Electronics"
+    });
+
+    // Show success message
+    showPurchaseSuccessMessage(orderSummary);
+
+    // Clear cart after purchase
+    setTimeout(() => {
+        cart = [];
+        updateCartDisplay();
+    }, 3000);
+}
+
+// Generate a random order ID
+function generateOrderId() {
+    return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+}
+
+// Show custom notification
+function showCustomNotification(message) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        animation: slideInRight 0.3s ease;
+        font-weight: 500;
+    `;
+    notification.textContent = message;
+
+    // Add animation keyframes
+    if (!document.getElementById('notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    document.body.appendChild(notification);
+
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// Show purchase success message
+function showPurchaseSuccessMessage(orderSummary) {
+    const message = `🎉 Purchase Successful! Order ID: ${orderSummary.orderId} | Total: $${orderSummary.total.toFixed(2)} | Items: ${orderSummary.totalItems}`;
+
+    // Show custom notification instead of alert
+    showCustomNotification(message);
+
+    // You can replace this with a custom modal or notification
+    console.log('Purchase completed successfully!');
+    console.log('Order Details:', orderSummary);
+}
+
+// Animate cart icon
+function animateCartIcon() {
+    const cartIcon = document.querySelector('.cart-icon-wrapper');
+    cartIcon.style.animation = 'none';
+    setTimeout(() => {
+        cartIcon.style.animation = 'pulse 0.5s ease';
+    }, 10);
+}
+
+// Additional utility functions you can use
+
+// Clear entire cart
+function clearCart() {
+    cart = [];
+    updateCartDisplay();
+    console.log('Cart cleared');
+}
+
+// Remove specific item from cart
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartDisplay();
+    console.log(`Product ${productId} removed from cart`);
+}
+
+// Update item quantity
+function updateQuantity(productId, newQuantity) {
+    const product = cart.find(item => item.id === productId);
+    if (product) {
+        if (newQuantity <= 0) {
+            removeFromCart(productId);
+        } else {
+            product.quantity = newQuantity;
+            updateCartDisplay();
+        }
+    }
+}
+
+// Get cart total
+function getCartTotal() {
+    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+}
+
+// Get cart item count
+function getCartItemCount() {
+    return cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+// Export cart data
+function exportCartData() {
+    return {
+        items: cart,
+        total: getCartTotal(),
+        itemCount: getCartItemCount(),
+        timestamp: new Date().toISOString()
+    };
+}
+
+// Console helper - shows available functions
+console.log(`
+🛒 E-Commerce Cart System Loaded!
+
+Available functions you can use in the console:
+- clearCart() - Clear all items from cart
+- removeFromCart(productId) - Remove specific item
+- updateQuantity(productId, newQuantity) - Update item quantity
+- getCartTotal() - Get total cart value
+- getCartItemCount() - Get total items in cart
+- exportCartData() - Export cart data as JSON
+
+Cart state is available in the 'cart' variable.
+`);
