@@ -30,119 +30,149 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <h1>Shadow / iFrame Elements Metrics Demo</h1>
 
-  <!-- Standard Page -->
+  <!-- 1. Standard CSS Selector: #product-page .add-to-cart -->
   <div id="product-page" class="section">
+    <h2>1. Standard DOM</h2>
     <button class="add-to-cart">Standard Add to Cart</button>
   </div>
 
-  <!-- Shadow DOM -->
-  <div id="product-card" class="section"><template shadowrootmode="open">
-<button class="normal">Normal</button>
-<button class="add-to-cart">Shadow Add to Cart</button>
-<div id="nested">
-  <button class="nested-add-to-cart">Nested Add to cart</button>
-</div>
-</template></div>
+  <hr>
 
-  <!-- Nested Shadow DOM -->
-  <div id="search-results" class="section"><template shadowrootmode="open"><filter-panel><template shadowrootmode="open">
-      <label>
-        <input type="checkbox"> Filter Option
-      </label>
-    </template></filter-panel></template></div>
+  <!-- 2. ShadowDOM Selector: #product-card >> button.add-to-cart -->
+  <div id="product-card" class="section">
+    <h2>2. Shadow DOM</h2>
+    <template shadowrootmode="open">
+      <button class="normal">Normal</button>
+      <button class="add-to-cart">Shadow Add to Cart</button>
+      <div id="nested">
+        <button class="nested-add-to-cart">Nested Add to cart</button>
+      </div>
+    </template>
+  </div>
 
-  <!-- iFrame -->
-  <iframe id="site-header" srcdoc="
-  &lt;button class=&quot;mini-cart-icon&quot;&gt;Mini Cart&lt;/button&gt;
-"></iframe>
+  <hr>
 
-  <!-- iFrame with Shadow DOM -->
-  <iframe id="checkout" srcdoc="
-  &lt;div id=&quot;cart&quot;&gt;&lt;/div&gt;
-  &lt;script&gt;
-    const cart = document.getElementById(&quot;cart&quot;);
-    const shadow = cart.attachShadow({ mode: &quot;open&quot; });
-    shadow.innerHTML = '&lt;button class=&quot;confirm-payment&quot;&gt;Pay Now&lt;/button&gt;';
-  &lt;/script&gt;
-"></iframe>
+  <!-- 3. Nested ShadowDOM Selector: #search-results >> filter-panel >> input[type="checkbox"] -->
+  <div id="search-results" class="section">
+    <h2>3. Nested Shadow DOM</h2>
+    <template shadowrootmode="open">
+      <filter-panel>
+        <template shadowrootmode="open">
+          <label>
+            <input type="checkbox"> Filter Option
+          </label>
+        </template>
+      </filter-panel>
+    </template>
+  </div>
 
-  <!-- Shadow containing iframe -->
-  <div id="order-summary" class="section"><template shadowrootmode="open">
-  <iframe id="summary-frame" srcdoc="
-  &lt;button class=&quot;place-order&quot;&gt;Place Order&lt;/button&gt;
-"></iframe>
-</template></div>
+  <hr>
+
+  <!-- 4. IFrame + ShadowDOM: iframe#checkout >>> button-pay-now -->
+  <div class="section">
+    <h2>4. IFrame + Shadow DOM</h2>
+    <iframe id="checkout" srcdoc="
+      <h3>Checkout IFrame</h3>
+      <button-pay-now></button-pay-now>
+      <script>
+        class PayNow extends HTMLElement {
+          constructor() {
+            super();
+            const shadow = this.attachShadow({ mode: 'open' });
+            shadow.innerHTML = '<button class=\'button-pay-now\'>Pay Now (Shadow)</button>';
+          }
+        }
+        customElements.define('button-pay-now', PayNow);
+      </script>
+    "></iframe>
+  </div>
+
+  <hr>
+
+  <!-- 5. IFrame + Nested ShadowDOM: iframe#checkout-nested >>> #cart >> button.confirm-payment -->
+  <div class="section">
+    <h2>5. IFrame + Nested Shadow DOM</h2>
+    <iframe id="checkout-nested" srcdoc="
+      <h3>Checkout Nested IFrame</h3>
+      <div id='cart'></div>
+      <script>
+        const cart = document.getElementById('cart');
+        const shadow = cart.attachShadow({ mode: 'open' });
+        shadow.innerHTML = '<button class=\'confirm-payment\'>Confirm Payment</button>';
+      </script>
+    "></iframe>
+  </div>
+
+  <hr>
+
+  <!-- 6. IFrame + Standard: iframe#site-header >>> .mini-cart-icon -->
+  <div class="section">
+    <h2>6. IFrame + Standard DOM</h2>
+    <iframe id="site-header" srcdoc="
+      <button class='mini-cart-icon'>Mini Cart (Standard)</button>
+    "></iframe>
+  </div>
+
+  <hr>
+
+  <!-- 7. Shadow containing iframe: #order-summary >> iframe >>> .place-order -->
+  <div id="order-summary" class="section">
+    <h2>7. Shadow DOM >> IFrame</h2>
+    <template shadowrootmode="open">
+      <iframe id="summary-frame" srcdoc="
+        <button class='place-order'>Place Order (Shadow >> IFrame)</button>
+      "></iframe>
+    </template>
+  </div>
 
 <script>
-/* ---------------------------
-   #product-card >> button.add-to-cart
----------------------------- */
-const productCard = document.getElementById("product-card");
-const pcShadow = productCard.attachShadow({ mode: "open" });
-
-pcShadow.innerHTML = `
-  <button class="add-to-cart">Shadow Add to Cart</button>
-`;
-
-/* ---------------------------
-   #search-results >> filter-panel >> input
----------------------------- */
-const searchResults = document.getElementById("search-results");
-const srShadow = searchResults.attachShadow({ mode: "open" });
-
-srShadow.innerHTML = `<filter-panel></filter-panel>`;
-
-class FilterPanel extends HTMLElement {
-  constructor() {
-    super();
-    const shadow = this.attachShadow({ mode: "open" });
-    shadow.innerHTML = `
-      <label>
-        <input type="checkbox" /> Filter Option
-      </label>
+/* Ensure Shadow DOMs are initialized correctly for scripts if needed */
+(function() {
+  // #product-card
+  const productCard = document.getElementById("product-card");
+  if (productCard && !productCard.shadowRoot) {
+    const pcShadow = productCard.attachShadow({ mode: "open" });
+    pcShadow.innerHTML = `
+      <button class="normal">Normal</button>
+      <button class="add-to-cart">Shadow Add to Cart</button>
+      <div id="nested">
+        <button class="nested-add-to-cart">Nested Add to cart</button>
+      </div>
     `;
   }
-}
-customElements.define("filter-panel", FilterPanel);
 
-/* ---------------------------
-   iframe#site-header >>> .mini-cart-icon
----------------------------- */
-const siteHeader = document.getElementById("site-header");
-siteHeader.srcdoc = `
-  <button class="mini-cart-icon">Mini Cart</button>
-`;
+  // #search-results
+  const searchResults = document.getElementById("search-results");
+  if (searchResults && !searchResults.shadowRoot) {
+    const srShadow = searchResults.attachShadow({ mode: "open" });
+    srShadow.innerHTML = `<filter-panel></filter-panel>`;
+    
+    if (!customElements.get("filter-panel")) {
+      class FilterPanel extends HTMLElement {
+        constructor() {
+          super();
+          const shadow = this.attachShadow({ mode: "open" });
+          shadow.innerHTML = `
+            <label>
+              <input type="checkbox" /> Filter Option
+            </label>
+          `;
+        }
+      }
+      customElements.define("filter-panel", FilterPanel);
+    }
+  }
 
-/* ---------------------------
-   iframe#checkout >>> #cart >> button.confirm-payment
----------------------------- */
-const checkout = document.getElementById("checkout");
-checkout.srcdoc = `
-  <div id="cart"></div>
-  <script>
-    const cart = document.getElementById("cart");
-    const shadow = cart.attachShadow({ mode: "open" });
-    shadow.innerHTML = '<button class="confirm-payment">Pay Now</button>';
-  <\/script>
-`;
-
-/* ---------------------------
-   #order-summary >> iframe >>> .place-order
----------------------------- */
-const orderSummary = document.getElementById("order-summary");
-const osShadow = orderSummary.attachShadow({ mode: "open" });
-
-osShadow.innerHTML = `
-  <iframe id="summary-frame"></iframe>
-`;
-
-const summaryFrame = osShadow.querySelector("#summary-frame");
-summaryFrame.srcdoc = `
-  <button class="place-order">Place Order</button>
-`;
+  // #order-summary
+  const orderSummary = document.getElementById("order-summary");
+  if (orderSummary && !orderSummary.shadowRoot) {
+    const osShadow = orderSummary.attachShadow({ mode: "open" });
+    osShadow.innerHTML = `<iframe id="summary-frame"></iframe>`;
+    const summaryFrame = osShadow.querySelector("#summary-frame");
+    summaryFrame.srcdoc = `<button class="place-order">Place Order</button>`;
+  }
+})();
 </script>
-
-
 
 </body>
 </html>
