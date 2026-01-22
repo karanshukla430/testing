@@ -31,11 +31,10 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
   <h1>Shadow / iFrame Elements Metrics Demo</h1>
 
   <!-- 1. Standard CSS Selector: #product-page .add-to-cart -->
-   <input type="text" id="text-input" placeholder="Enter your name">
   <div id="product-page" class="section">
     <h2>1. Standard DOM</h2>
     <button class="add-to-cart">Standard Add to Cart</button>
-    <input type="text" id="text-input-2" placeholder="shadow your name">
+    <input type="text" id="text-input" placeholder="Enter your name">
   </div>
 
   <hr>
@@ -46,6 +45,7 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
     <template shadowrootmode="open">
       <button class="normal">Normal</button>
       <button class="add-to-cart">Shadow Add to Cart</button>
+      <input type="text" id="text-input-2" placeholder="shadow your name">
       <div id="nested">
         <button class="nested-add-to-cart">Nested Add to cart</button>
       </div>
@@ -137,7 +137,7 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
     pcShadow.innerHTML = `
       <button class="normal">Normal</button>
       <button class="add-to-cart">Shadow Add to Cart</button>
-      <input type="text" id="text-input-4" placeholder="shadow your name">
+      <input type="text" id="text-input-2" placeholder="shadow your name">
       <div id="nested">
         <button class="nested-add-to-cart">Nested Add to cart</button>
       </div>
