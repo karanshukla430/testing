@@ -127,6 +127,20 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
     </template>
   </div>
 
+  <hr>
+
+  <!-- 8. Nested IFrames: iframe#outer-frame >>> iframe#inner-frame >>> .nested-button -->
+  <div class="section">
+    <h2>8. IFrame >> IFrame (Nested IFrames)</h2>
+    <iframe id="outer-frame" srcdoc="
+      <h3>Outer IFrame</h3>
+      <iframe id='inner-frame' srcdoc='
+        <h4>Inner IFrame</h4>
+        <button class=&quot;nested-button&quot;>Nested IFrame Button</button>
+      '></iframe>
+    "></iframe>
+  </div>
+
 <script>
 /* Ensure Shadow DOMs are initialized correctly for scripts if needed */
 (function() {
