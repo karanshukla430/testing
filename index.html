@@ -59,18 +59,34 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <h1>Shadow / iFrame Elements Metrics Demo</h1>
 
-  <!-- 1. Standard CSS Selector: #product-page .add-to-cart -->
+  <!-- 1. SPA Routing Demo -->
+  <div class="section" id="spa-section">
+    <h2>1. SPA Routing</h2>
+    <div id="spa-nav" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+      <button class="spa-btn" data-route="/">Home</button>
+      <button class="spa-btn" data-route="/spa/about">SPA URL — About</button>
+      <button class="spa-btn" data-route="/spa/products">SPA URL — Products</button>
+      <button class="spa-btn" data-route="/spa/contact">SPA URL — Contact</button>
+    </div>
+    <div id="spa-view" style="padding:16px;border:1px solid #ccc;border-radius:6px;min-height:80px;background:#f9f9f9;">
+    </div>
+    <p style="margin-top:8px;font-size:13px;color:#666;">Current path: <code id="spa-current-path"></code></p>
+  </div>
+
+  <hr>
+
+  <!-- 2. Standard CSS Selector: #product-page .add-to-cart -->
   <div id="product-page" class="section">
-    <h2>1. Standard DOM</h2>
+    <h2>2. Standard DOM</h2>
     <button class="add-to-cart">Standard Add to Cart</button>
     <input type="text" id="text-input" placeholder="Enter your name">
   </div>
 
   <hr>
 
-  <!-- 2. ShadowDOM Selector: #product-card >> button.add-to-cart -->
+  <!-- 3. ShadowDOM Selector: #product-card >> button.add-to-cart -->
   <div id="product-card" class="section">
-    <h2>2. Shadow DOM</h2>
+    <h2>3. Shadow DOM</h2>
     <template shadowrootmode="open">
       <button class="normal">Normal</button>
       <button class="add-to-cart">Shadow Add to Cart</button>
@@ -83,9 +99,9 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <hr>
 
-  <!-- 3. Nested ShadowDOM Selector: #search-results >> filter-panel >> input[type="checkbox"] -->
+  <!-- 4. Nested ShadowDOM Selector: #search-results >> filter-panel >> input[type="checkbox"] -->
   <div id="search-results" class="section">
-    <h2>3. Nested Shadow DOM</h2>
+    <h2>4. Nested Shadow DOM</h2>
     <template shadowrootmode="open">
       <filter-panel>
         <template shadowrootmode="open">
@@ -99,9 +115,9 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <hr>
 
-  <!-- 4. IFrame + ShadowDOM: iframe#checkout >>> button-pay-now -->
+  <!-- 5. IFrame + ShadowDOM: iframe#checkout >>> button-pay-now -->
   <div class="section">
-    <h2>4. IFrame + Shadow DOM</h2>
+    <h2>5. IFrame + Shadow DOM</h2>
     <iframe id="checkout" srcdoc="
       <h3>Checkout IFrame</h3>
       <button-pay-now></button-pay-now>
@@ -120,9 +136,9 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <hr>
 
-  <!-- 5. IFrame + Nested ShadowDOM: iframe#checkout-nested >>> #cart >> button.confirm-payment -->
+  <!-- 6. IFrame + Nested ShadowDOM: iframe#checkout-nested >>> #cart >> button.confirm-payment -->
   <div class="section">
-    <h2>5. IFrame + Nested Shadow DOM</h2>
+    <h2>6. IFrame + Nested Shadow DOM</h2>
     <iframe id="checkout-nested" srcdoc="
       <h3>Checkout Nested IFrame</h3>
       <div id='cart'></div>
@@ -136,9 +152,9 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <hr>
 
-  <!-- 6. IFrame + Standard: iframe#site-header >>> .mini-cart-icon -->
+  <!-- 7. IFrame + Standard: iframe#site-header >>> .mini-cart-icon -->
   <div class="section">
-    <h2>6. IFrame + Standard DOM</h2>
+    <h2>7. IFrame + Standard DOM</h2>
     <iframe id="site-header" srcdoc="
       <button class='mini-cart-icon'>Mini Cart (Standard)</button>
     "></iframe>
@@ -146,9 +162,9 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <hr>
 
-  <!-- 7. Shadow containing iframe: #order-summary >> iframe >>> .place-order -->
+  <!-- 8. Shadow containing iframe: #order-summary >> iframe >>> .place-order -->
   <div id="order-summary" class="section">
-    <h2>7. Shadow DOM >> IFrame</h2>
+    <h2>8. Shadow DOM >> IFrame</h2>
     <template shadowrootmode="open">
       <iframe id="summary-frame" srcdoc="
         <button class='place-order'>Place Order (Shadow >> IFrame)</button>
@@ -158,9 +174,9 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
 
   <hr>
 
-  <!-- 8. Nested IFrames: iframe#outer-frame >>> iframe#inner-frame >>> .nested-button -->
+  <!-- 9. Nested IFrames: iframe#outer-frame >>> iframe#inner-frame >>> .nested-button -->
   <div class="section">
-    <h2>8. IFrame >> IFrame (Nested IFrames)</h2>
+    <h2>9. IFrame >> IFrame (Nested IFrames)</h2>
     <iframe id="outer-frame" srcdoc="
       <h3>Outer IFrame</h3>
       <iframe id='inner-frame' srcdoc='
@@ -169,6 +185,7 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
       '></iframe>
     "></iframe>
   </div>
+
 
 <script>
 /* Ensure Shadow DOMs are initialized correctly for scripts if needed */
@@ -217,6 +234,45 @@ f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+
     const summaryFrame = osShadow.querySelector("#summary-frame");
     summaryFrame.srcdoc = `<button class="place-order">Place Order</button>`;
   }
+})();
+</script>
+
+<script>
+(function () {
+  var routes = {
+    '/': '<h3>Home</h3><p>Welcome to the home route. No page reload happened.</p>',
+    '/spa/about': '<h3>About</h3><p>This is the <strong>About</strong> page rendered client-side via the History API.</p>',
+    '/spa/products': '<h3>Products</h3><ul><li>Product A</li><li>Product B</li><li>Product C</li></ul>',
+    '/spa/contact': '<h3>Contact</h3><p>Reach us at <em>hello@example.com</em> — no reload, pure SPA.</p>'
+  };
+
+  function render(path) {
+    var view = document.getElementById('spa-view');
+    var label = document.getElementById('spa-current-path');
+    view.innerHTML = routes[path] || '<p>404 — Route not found.</p>';
+    label.textContent = path;
+    document.querySelectorAll('.spa-btn').forEach(function (btn) {
+      btn.style.fontWeight = btn.dataset.route === path ? 'bold' : 'normal';
+      btn.style.outline = btn.dataset.route === path ? '2px solid #333' : 'none';
+    });
+  }
+
+  function navigate(path) {
+    window.history.pushState({ path: path }, '', path);
+    render(path);
+  }
+
+  document.getElementById('spa-nav').addEventListener('click', function (e) {
+    if (e.target.classList.contains('spa-btn')) {
+      navigate(e.target.dataset.route);
+    }
+  });
+
+  window.addEventListener('popstate', function (e) {
+    render(e.state && e.state.path ? e.state.path : '/');
+  });
+
+  render(window.location.pathname in routes ? window.location.pathname : '/');
 })();
 </script>
 
